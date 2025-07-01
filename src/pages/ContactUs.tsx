@@ -31,10 +31,11 @@ const ContactUs: React.FC = () => {
   const contactInfo = [
     {
       icon: Phone,
-      title: 'Phone Support',
-      details: ['+1 (555) 123-4567', '+1 (555) 987-6543'],
-      description: 'Available 24/7 for urgent medical inquiries',
+      title: 'Call Us',
+      description: 'Speak with our support team',
+      details: ['+91 22 1234 5678', '+91 22 9876 5432'],
       color: 'from-primary-500 to-secondary-500',
+      bgColor: 'bg-primary-100'
     },
     {
       icon: Mail,

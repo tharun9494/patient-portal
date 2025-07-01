@@ -57,6 +57,18 @@ const Register: React.FC = () => {
       // Create initial patient profile with patient ID
       await setDoc(doc(db, 'patients', userCredential.user.uid), patientProfile);
 
+      // Also create a users collection entry for basic info
+      await setDoc(doc(db, 'users', userCredential.user.uid), {
+        uid: userCredential.user.uid,
+        patientId: patientProfile.patientId,
+        fullName: data.fullName,
+        email: data.email,
+        phoneNumber: data.phoneNumber,
+        isProfileComplete: false,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      });
+
       toast.success(`Registration successful! Your Patient ID is: ${patientProfile.patientId}`, {
         duration: 8000,
         style: {
@@ -68,7 +80,7 @@ const Register: React.FC = () => {
         },
       });
       
-      navigate('/complete-profile');
+      navigate('/dashboard');
     } catch (error: any) {
       console.error('Registration error:', error);
       if (error.code === 'auth/email-already-in-use') {

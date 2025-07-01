@@ -21,6 +21,8 @@ export interface PatientProfile {
   isProfileComplete: boolean;
   createdAt: Date;
   updatedAt: Date;
+  profilePicUrl?: string;
+  photoURL?: string;
 }
 
 export interface Hospital {

@@ -339,7 +339,7 @@ const Appointments: React.FC = () => {
       
       if (!patientSnap.exists()) {
         toast.error('Patient profile not found. Please complete your profile first.');
-        navigate('/complete-profile');
+        navigate('/dashboard');
         return;
       }
 
@@ -347,8 +347,8 @@ const Appointments: React.FC = () => {
       
       // Check if patient profile is complete
       if (!patientData.isProfileComplete) {
-        toast.error('Please complete your profile before booking appointments.');
-        navigate('/complete-profile');
+        toast.error('Please complete your profile before booking appointments. Go to your dashboard and update your profile.');
+        navigate('/dashboard');
         return;
       }
       
@@ -381,7 +381,7 @@ const Appointments: React.FC = () => {
         } catch (generateError) {
           console.error('Error generating patient ID:', generateError);
           toast.error('Unable to generate patient ID. Please complete your profile first.');
-          navigate('/complete-profile');
+          navigate('/dashboard');
           return;
         }
       }

@@ -55,6 +55,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
               createdAt: userData.createdAt || new Date(),
               updatedAt: userData.updatedAt || new Date()
             });
+          } else {
+            // If neither exists, create a basic profile
+            setPatientProfile({
+              uid: currentUser.uid,
+              patientId: 'Not assigned',
+              fullName: currentUser.displayName || 'Unknown',
+              email: currentUser.email || '',
+              phoneNumber: '',
+              address: '',
+              pincode: '',
+              gender: '',
+              age: 0,
+              medicalHistory: '',
+              isProfileComplete: false,
+              createdAt: new Date(),
+              updatedAt: new Date()
+            });
           }
         }
       } catch (error) {

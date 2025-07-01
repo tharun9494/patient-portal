@@ -190,7 +190,7 @@ const TermsConditions: React.FC = () => {
                   <strong>Email:</strong> legal@healthportal.com
                 </p>
                 <p className="text-gray-600 mb-2">
-                  <strong>Phone:</strong> +1 (555) 123-4567
+                  <strong>Phone:</strong> +91 22 1234 5678
                 </p>
                 <p className="text-gray-600">
                   <strong>Address:</strong> 123 Medical Center Dr, Healthcare City, HC 12345

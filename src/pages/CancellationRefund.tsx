@@ -1,5 +1,5 @@
 import React from 'react';
-import { RotateCcw, Clock, AlertTriangle, CheckCircle, XCircle, Calendar, DollarSign } from 'lucide-react';
+import { RotateCcw, Clock, AlertTriangle, CheckCircle, XCircle, Calendar, CreditCard } from 'lucide-react';
 
 const CancellationRefund: React.FC = () => {
   const lastUpdated = 'January 15, 2024';
@@ -177,7 +177,7 @@ const CancellationRefund: React.FC = () => {
                   </div>
                   <div>
                     <h4 className="font-semibold text-gray-900">Phone Cancellation</h4>
-                    <p className="text-gray-600 text-sm">Call our support line at +1 (555) 123-4567</p>
+                    <p className="text-gray-600 text-sm">Call our support line at +91 22 1234 5678</p>
                   </div>
                 </div>
                 <div className="flex items-start space-x-3">
@@ -225,7 +225,7 @@ const CancellationRefund: React.FC = () => {
           <div className="grid md:grid-cols-3 gap-8">
             <div className="bg-white p-6 rounded-2xl shadow-soft text-center">
               <div className="bg-success-100 p-3 rounded-xl w-fit mx-auto mb-4">
-                <DollarSign className="h-8 w-8 text-success-600" />
+                <CreditCard className="h-8 w-8 text-success-600" />
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">Credit/Debit Cards</h3>
               <p className="text-gray-600 text-sm">
@@ -270,7 +270,7 @@ const CancellationRefund: React.FC = () => {
               <div>
                 <h3 className="font-semibold text-gray-900 mb-2">Contact Support</h3>
                 <p className="text-gray-600 text-sm mb-2">Email: support@healthportal.com</p>
-                <p className="text-gray-600 text-sm">Phone: +1 (555) 123-4567</p>
+                <p className="text-gray-600 text-sm">Phone: +91 22 1234 5678</p>
               </div>
               <div>
                 <h3 className="font-semibold text-gray-900 mb-2">Business Hours</h3>

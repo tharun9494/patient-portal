@@ -67,9 +67,17 @@ const Navbar: React.FC = () => {
                     onClick={() => setShowUserMenu(!showUserMenu)}
                     className="flex items-center space-x-3 bg-gradient-to-r from-primary-500 to-secondary-500 text-white px-4 py-2 rounded-xl hover:shadow-glow-primary transition-all duration-300 transform hover:scale-105"
                   >
-                    <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
-                      <User className="h-4 w-4" />
-                    </div>
+                    {patientProfile?.photoURL || patientProfile?.profilePicUrl ? (
+                      <img
+                        src={patientProfile.photoURL || patientProfile.profilePicUrl}
+                        alt="Profile"
+                        className="w-8 h-8 rounded-full object-cover border-2 border-white shadow"
+                      />
+                    ) : (
+                      <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+                        <User className="h-4 w-4" />
+                      </div>
+                    )}
                     <span className="text-sm font-medium">
                       {patientProfile?.fullName?.split(' ')[0] || 'User'}
                     </span>
@@ -77,7 +85,18 @@ const Navbar: React.FC = () => {
                   
                   {showUserMenu && (
                     <div className="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-large border border-gray-100 py-2 animate-slide-down">
-                      <div className="px-4 py-3 border-b border-gray-100">
+                      <div className="flex flex-col items-center px-4 py-4 border-b border-gray-100">
+                        {patientProfile?.photoURL || patientProfile?.profilePicUrl ? (
+                          <img
+                            src={patientProfile.photoURL || patientProfile.profilePicUrl}
+                            alt="Profile"
+                            className="w-14 h-14 rounded-full object-cover border-2 border-primary-500 shadow mb-2"
+                          />
+                        ) : (
+                          <div className="w-14 h-14 bg-primary-100 rounded-full flex items-center justify-center mb-2">
+                            <User className="h-6 w-6 text-primary-500" />
+                          </div>
+                        )}
                         <p className="text-sm font-medium text-gray-900">
                           {patientProfile?.fullName || 'User'}
                         </p>

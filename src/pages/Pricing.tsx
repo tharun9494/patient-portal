@@ -22,7 +22,7 @@ const Pricing: React.FC = () => {
     {
       name: 'Premium',
       icon: Shield,
-      price: { monthly: 19, yearly: 190 },
+      price: { monthly: 999, yearly: 9999 },
       description: 'Enhanced features for comprehensive care',
       features: [
         'Everything in Basic',
@@ -39,7 +39,7 @@ const Pricing: React.FC = () => {
     {
       name: 'Family',
       icon: Users,
-      price: { monthly: 39, yearly: 390 },
+      price: { monthly: 1999, yearly: 19999 },
       description: 'Complete solution for the entire family',
       features: [
         'Everything in Premium',
@@ -56,7 +56,7 @@ const Pricing: React.FC = () => {
     {
       name: 'Enterprise',
       icon: Crown,
-      price: { monthly: 99, yearly: 990 },
+      price: { monthly: 4999, yearly: 49999 },
       description: 'Advanced solutions for organizations',
       features: [
         'Everything in Family',
@@ -154,7 +154,7 @@ const Pricing: React.FC = () => {
                   <div className="mb-6">
                     <div className="flex items-baseline justify-center">
                       <span className="text-4xl font-bold text-gray-900">
-                        ${plan.price[billingCycle]}
+                        ₹{plan.price[billingCycle]}
                       </span>
                       {plan.price[billingCycle] > 0 && (
                         <span className="text-gray-500 ml-1">

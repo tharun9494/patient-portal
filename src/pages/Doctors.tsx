@@ -208,7 +208,7 @@ const Doctors: React.FC = () => {
           
           {doctor.consultationFee && (
             <div className="text-sm text-gray-600">
-              Consultation Fee: <span className="font-semibold text-primary-600">${doctor.consultationFee}</span>
+              Consultation Fee: <span className="font-semibold text-primary-600">₹{doctor.consultationFee}</span>
             </div>
           )}
         </div>
@@ -348,7 +348,7 @@ const Doctors: React.FC = () => {
           {doctor.consultationFee && (
             <div className="bg-gradient-to-r from-primary-50 to-secondary-50 p-6 rounded-xl">
               <h3 className="text-xl font-semibold text-gray-900 mb-3">Consultation Fee</h3>
-              <div className="text-3xl font-bold text-primary-600">${doctor.consultationFee}</div>
+              <div className="text-3xl font-bold text-primary-600">₹{doctor.consultationFee}</div>
               <p className="text-gray-600 mt-2">Per consultation</p>
             </div>
           )}

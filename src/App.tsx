@@ -8,7 +8,6 @@ import LoadingSpinner from './components/LoadingSpinner';
 import Home from './pages/Home';
 import Register from './pages/Register';
 import Login from './pages/Login';
-import CompleteProfile from './pages/CompleteProfile';
 import Appointments from './pages/Appointments';
 import OnlineConsultation from './pages/OnlineConsultation';
 import Dashboard from './pages/Dashboard';
@@ -19,6 +18,10 @@ import Pricing from './pages/Pricing';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsConditions from './pages/TermsConditions';
 import CancellationRefund from './pages/CancellationRefund';
+import HelpCenter from './pages/HelpCenter';
+import FAQs from './pages/FAQs';
+import PatientSupport from './pages/PatientSupport';
+import EmergencyContact from './pages/EmergencyContact';
 
 // Protected Route Component
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -63,6 +66,10 @@ const AppContent: React.FC = () => {
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/terms" element={<TermsConditions />} />
           <Route path="/cancellation-refund" element={<CancellationRefund />} />
+          <Route path="/help" element={<HelpCenter />} />
+          <Route path="/faqs" element={<FAQs />} />
+          <Route path="/support" element={<PatientSupport />} />
+          <Route path="/emergency" element={<EmergencyContact />} />
           <Route 
             path="/register" 
             element={
@@ -77,14 +84,6 @@ const AppContent: React.FC = () => {
               <PublicRoute>
                 <Login />
               </PublicRoute>
-            } 
-          />
-          <Route 
-            path="/complete-profile" 
-            element={
-              <ProtectedRoute>
-                <CompleteProfile />
-              </ProtectedRoute>
             } 
           />
           <Route 
