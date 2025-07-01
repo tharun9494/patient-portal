@@ -24,6 +24,7 @@ import {
   XCircle,
   Copy
 } from 'lucide-react';
+import logo from '../images/logo.png';
 import { useAuth } from '../contexts/AuthContext';
 import { db } from '../firebase/config';
 import { Appointment } from '../types';
@@ -32,6 +33,7 @@ import toast from 'react-hot-toast';
 import { ref as storageRef, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { collection as fsCollection, addDoc, getDocs as fsGetDocs, query as fsQuery, orderBy as fsOrderBy } from 'firebase/firestore';
 import { storage } from '../firebase/config';
+import { doc as firestoreDoc, getDoc as firestoreGetDoc } from 'firebase/firestore';
 
 const Dashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState('overview');
@@ -56,6 +58,10 @@ const Dashboard: React.FC = () => {
   const [profilePhotoFile, setProfilePhotoFile] = useState<File | null>(null);
   const [profilePhotoUploading, setProfilePhotoUploading] = useState(false);
   const [profilePhotoUploadProgress, setProfilePhotoUploadProgress] = useState(0);
+  // Add state to cache doctor timeSlots
+  const [doctorTimeSlotsCache, setDoctorTimeSlotsCache] = useState<Record<string, any[]>>({});
+  // Add state to cache doctor profile images
+  const [doctorImageCache, setDoctorImageCache] = useState<Record<string, string>>({});
 
   useEffect(() => {
     fetchDashboardData();
@@ -86,11 +92,18 @@ const Dashboard: React.FC = () => {
         } as Appointment);
       });
 
-      // Sort appointments by date in JavaScript instead of Firestore
+      // Sort appointments: scheduled first, then completed, then cancelled, each by date/time descending
       appointmentList.sort((a, b) => {
-        const dateA = new Date(a.date).getTime();
-        const dateB = new Date(b.date).getTime();
-        return dateB - dateA; // Sort in descending order (most recent first)
+        const statusOrder = (status: string) => {
+          if (status === 'scheduled') return 0;
+          if (status === 'completed') return 1;
+          return 2; // cancelled or others
+        };
+        const statusDiff = statusOrder(a.status) - statusOrder(b.status);
+        if (statusDiff !== 0) return statusDiff;
+        const dateTimeA = new Date(`${a.date}T${a.time || '00:00'}`).getTime();
+        const dateTimeB = new Date(`${b.date}T${b.time || '00:00'}`).getTime();
+        return dateTimeB - dateTimeA; // Descending order within status
       });
 
       setAppointments(appointmentList);
@@ -305,6 +318,57 @@ const Dashboard: React.FC = () => {
     }
   };
 
+  // Helper to get meeting link for an appointment
+  const getMeetingLink = async (appointment: Appointment) => {
+    if (appointment.meetingLink) return appointment.meetingLink;
+    // If not present, fetch from doctor's timeSlots
+    const cacheKey = appointment.doctorId;
+    let timeSlots = doctorTimeSlotsCache[cacheKey];
+    if (!timeSlots) {
+      // Fetch from Firestore
+      const doctorRef = firestoreDoc(db, 'doctors', appointment.doctorId);
+      const doctorSnap = await firestoreGetDoc(doctorRef);
+      if (doctorSnap.exists()) {
+        timeSlots = doctorSnap.data().timeSlots || [];
+        setDoctorTimeSlotsCache(prev => ({ ...prev, [cacheKey]: timeSlots }));
+      } else {
+        return null;
+      }
+    }
+    // Find the slot matching date and time
+    const slot = timeSlots.find((slot: any) => slot.date === appointment.date && slot.startTime === appointment.time);
+    return slot?.meetingLink || null;
+  };
+
+  // Helper to get doctor's profile image
+  const getDoctorImage = async (doctorId: string) => {
+    if (doctorImageCache[doctorId]) return doctorImageCache[doctorId];
+    try {
+      const doctorRef = firestoreDoc(db, 'doctors', doctorId);
+      const doctorSnap = await firestoreGetDoc(doctorRef);
+      if (doctorSnap.exists()) {
+        const data = doctorSnap.data();
+        const img = data.profileImage || data.photoURL || '';
+        setDoctorImageCache(prev => ({ ...prev, [doctorId]: img }));
+        return img;
+      }
+    } catch (e) {}
+    return '';
+  };
+
+  // Async image component
+  const DoctorImage: React.FC<{ doctorId: string; alt?: string; size?: number }> = ({ doctorId, alt, size = 40 }) => {
+    const [img, setImg] = useState<string | null>(null);
+    useEffect(() => {
+      let mounted = true;
+      getDoctorImage(doctorId).then(url => { if (mounted) setImg(url || null); });
+      return () => { mounted = false; };
+    }, [doctorId]);
+    if (img)
+      return <img src={img} alt={alt || ''} className={`rounded-full object-cover`} style={{ width: size, height: size }} />;
+    return <Stethoscope className={`text-primary-600`} style={{ width: size, height: size }} />;
+  };
+
   const sidebarItems = [
     { id: 'overview', label: 'Dashboard', icon: Activity },
     { id: 'appointments', label: 'My Appointments', icon: Calendar },
@@ -451,7 +515,7 @@ const Dashboard: React.FC = () => {
                       <div key={appointment.id} className="flex items-center justify-between p-4 bg-primary-50 rounded-xl hover:bg-primary-100 transition-colors">
                         <div className="flex items-center space-x-4">
                           <div className="bg-primary-100 p-2 rounded-lg">
-                            <Stethoscope className="h-5 w-5 text-primary-600" />
+                            <DoctorImage doctorId={appointment.doctorId} alt={appointment.doctorName} size={32} />
                           </div>
                           <div>
                             <p className="font-medium text-gray-900">{appointment.doctorName || 'Dr. Sample Doctor'}</p>
@@ -586,7 +650,7 @@ const Dashboard: React.FC = () => {
                     <div className="flex items-start justify-between">
                       <div className="flex items-start space-x-4">
                         <div className="bg-primary-100 p-3 rounded-xl">
-                          <Stethoscope className="h-6 w-6 text-primary-600" />
+                          <DoctorImage doctorId={appointment.doctorId} alt={appointment.doctorName} size={40} />
                         </div>
                         <div className="flex-1">
                           <div className="flex items-center space-x-2 mb-2">
@@ -633,13 +697,8 @@ const Dashboard: React.FC = () => {
                               <p className="text-gray-600 mb-1">
                                 <span className="font-medium">Consultation Fee:</span> ₹{appointment.consultationFee || 'Not specified'}
                               </p>
-                              {appointment.meetingLink && (
-                                <p className="text-gray-600">
-                                  <span className="font-medium">Meeting Link:</span> 
-                                  <a href={appointment.meetingLink} target="_blank" rel="noopener noreferrer" className="text-primary-600 hover:text-primary-700 ml-1">
-                                    Join Meeting
-                                  </a>
-                                </p>
+                              {appointment.status === 'scheduled' && appointment.type === 'online' && (
+                                <AsyncJoinMeetingButton appointment={appointment} getMeetingLink={getMeetingLink} />
                               )}
                             </div>
                           </div>
@@ -1111,9 +1170,7 @@ const Dashboard: React.FC = () => {
         <div className="w-72 min-h-screen bg-white/90 backdrop-blur-sm shadow-large">
           <div className="p-6">
             <div className="flex items-center space-x-3 mb-8">
-              <div className="bg-gradient-to-r from-primary-500 to-accent-500 p-2.5 rounded-xl shadow-glow-primary">
-                <Heart className="h-6 w-6 text-white" />
-              </div>
+              <img src={logo} alt="logo" className="h-12 w-auto" />
               <span className="text-xl font-bold text-gray-900">HealthPortal</span>
             </div>
             <nav className="space-y-2">
@@ -1149,6 +1206,30 @@ const Dashboard: React.FC = () => {
         </div>
       </div>
     </div>
+  );
+};
+
+const AsyncJoinMeetingButton: React.FC<{ appointment: Appointment; getMeetingLink: (a: Appointment) => Promise<string | null>; }> = ({ appointment, getMeetingLink }) => {
+  const [meetingLink, setMeetingLink] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    let mounted = true;
+    setLoading(true);
+    getMeetingLink(appointment).then(link => {
+      if (mounted) setMeetingLink(link || null);
+      setLoading(false);
+    });
+    return () => { mounted = false; };
+  }, [appointment, getMeetingLink]);
+  if (loading) return <div className="mt-2 text-gray-500 text-sm">Loading meeting link...</div>;
+  if (!meetingLink) return null;
+  return (
+    <button
+      onClick={() => window.open(meetingLink!, '_blank', 'noopener,noreferrer')}
+      className="bg-success-500 hover:bg-success-600 text-white px-4 py-2 rounded-lg font-semibold shadow transition-colors mt-2"
+    >
+      Join Meeting
+    </button>
   );
 };
 

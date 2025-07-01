@@ -25,6 +25,8 @@ interface Doctor {
   availableHours?: string;
   city: string;
   availableSlots?: string[];
+  profileImage?: string;
+  photoURL?: string;
 }
 
 const Doctors: React.FC = () => {
@@ -168,8 +170,12 @@ const Doctors: React.FC = () => {
     >
       <div className="flex items-start space-x-4">
         <div className="w-16 h-16 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-xl flex items-center justify-center flex-shrink-0">
-          {doctor.image ? (
-            <img src={doctor.image} alt={doctor.name} className="w-full h-full rounded-xl object-cover" />
+          {doctor.profileImage || doctor.photoURL ? (
+            <img
+              src={doctor.profileImage || doctor.photoURL}
+              alt={doctor.name}
+              className="w-full h-full rounded-xl object-cover"
+            />
           ) : (
             <User className="h-8 w-8 text-white" />
           )}
@@ -230,8 +236,12 @@ const Doctors: React.FC = () => {
         <div className="md:col-span-1">
           <div className="text-center">
             <div className="w-32 h-32 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
-              {doctor.image ? (
-                <img src={doctor.image} alt={doctor.name} className="w-full h-full rounded-2xl object-cover" />
+              {doctor.profileImage || doctor.photoURL ? (
+                <img
+                  src={doctor.profileImage || doctor.photoURL}
+                  alt={doctor.name}
+                  className="w-full h-full rounded-2xl object-cover"
+                />
               ) : (
                 <User className="h-16 w-16 text-white" />
               )}

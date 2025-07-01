@@ -177,7 +177,7 @@ const CancellationRefund: React.FC = () => {
                   </div>
                   <div>
                     <h4 className="font-semibold text-gray-900">Phone Cancellation</h4>
-                    <p className="text-gray-600 text-sm">Call our support line at +91 22 1234 5678</p>
+                    <p className="text-gray-600 text-sm">Call our support line at +91 8919403905</p>
                   </div>
                 </div>
                 <div className="flex items-start space-x-3">
@@ -269,8 +269,8 @@ const CancellationRefund: React.FC = () => {
             <div className="grid md:grid-cols-2 gap-6 text-left">
               <div>
                 <h3 className="font-semibold text-gray-900 mb-2">Contact Support</h3>
-                <p className="text-gray-600 text-sm mb-2">Email: support@healthportal.com</p>
-                <p className="text-gray-600 text-sm">Phone: +91 22 1234 5678</p>
+                <p className="text-gray-600 text-sm mb-2">Email: forefightera@gmail.com</p>
+                <p className="text-gray-600 text-sm">Phone: +91 89194 03905</p>
               </div>
               <div>
                 <h3 className="font-semibold text-gray-900 mb-2">Business Hours</h3>

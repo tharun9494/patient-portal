@@ -33,7 +33,7 @@ const ContactUs: React.FC = () => {
       icon: Phone,
       title: 'Call Us',
       description: 'Speak with our support team',
-      details: ['+91 22 1234 5678', '+91 22 9876 5432'],
+      details: ['+91 89194 03905'],
       color: 'from-primary-500 to-secondary-500',
       bgColor: 'bg-primary-100'
     },

@@ -187,13 +187,13 @@ const TermsConditions: React.FC = () => {
               </p>
               <div className="bg-gray-50 rounded-xl p-6">
                 <p className="text-gray-600 mb-2">
-                  <strong>Email:</strong> legal@healthportal.com
+                  <strong>Email:</strong> forefightera@gmail.com
                 </p>
                 <p className="text-gray-600 mb-2">
-                  <strong>Phone:</strong> +91 22 1234 5678
+                  <strong>Phone:</strong> +91 89194 03905
                 </p>
                 <p className="text-gray-600">
-                  <strong>Address:</strong> 123 Medical Center Dr, Healthcare City, HC 12345
+                  <strong>Address:</strong> madanapalle, andhra pradesh, india
                 </p>
               </div>
             </div>

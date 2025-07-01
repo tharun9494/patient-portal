@@ -147,7 +147,9 @@ const Appointments: React.FC = () => {
           experience: 10,
           qualifications: ['MBBS', 'MD ' + specialty],
           consultationFee: 800,
-          availableSlots: []
+          availableSlots: [],
+          profileImage: '/default-doctor-avatar.png',
+          photoURL: '/default-doctor-avatar.png'
         },
         {
           id: 'd2',
@@ -157,7 +159,9 @@ const Appointments: React.FC = () => {
           experience: 8,
           qualifications: ['MBBS', 'MD ' + specialty],
           consultationFee: 600,
-          availableSlots: []
+          availableSlots: [],
+          profileImage: '/default-doctor-avatar.png',
+          photoURL: '/default-doctor-avatar.png'
         }
       ];
       setDoctors(mockDoctors);
@@ -331,6 +335,15 @@ const Appointments: React.FC = () => {
       return;
     }
 
+    // Require meetingLink for online appointments
+    if (data.type === 'online') {
+      const selectedSlot = doctorTimeSlots.find(slot => slot.date === data.date && slot.startTime === data.time);
+      if (!selectedSlot || !selectedSlot.meetingLink) {
+        toast.error('No Google Meet link found for the selected slot. Please contact the hospital or try another slot.');
+        return;
+      }
+    }
+
     setLoading(true);
     try {
       // Fetch patient profile to get the real patient ID
@@ -425,6 +438,12 @@ const Appointments: React.FC = () => {
       // Get the selected hospital details
       const selectedAdmin = admins.find(a => a.hospitalName === data.hospitalId);
 
+      // For online appointments, fetch meetingLink from selected slot
+      let meetingLink = null;
+      if (data.type === 'online') {
+        meetingLink = selectedSlot.meetingLink;
+      }
+
       // Create appointment data object with real patient ID
       const appointmentData = {
         patientId: realPatientId, // Use the real patient ID from profile
@@ -444,7 +463,7 @@ const Appointments: React.FC = () => {
         status: 'scheduled',
         consultationFee: selectedDoctorObj.consultationFee,
         notes: '',
-        meetingLink: data.type === 'online' ? `https://meet.example.com/${Date.now()}` : null,
+        meetingLink: data.type === 'online' ? meetingLink : null,
         createdAt: new Date(),
         updatedAt: new Date()
       };
@@ -736,7 +755,17 @@ const Appointments: React.FC = () => {
                     }`}
                   >
                     <div className="flex items-start space-x-3">
-                      <UserCheck className="h-6 w-6 text-primary-600 flex-shrink-0 mt-1" />
+                      <div className="w-12 h-12 rounded-full bg-primary-100 flex items-center justify-center mr-3">
+                        {doctor.profileImage || doctor.photoURL ? (
+                          <img
+                            src={doctor.profileImage || doctor.photoURL}
+                            alt={doctor.name}
+                            className="w-12 h-12 rounded-full object-cover"
+                          />
+                        ) : (
+                          <UserCheck className="h-6 w-6 text-primary-600" />
+                        )}
+                      </div>
                       <div className="flex-1">
                         <h4 className="font-semibold text-gray-900">{doctor.name}</h4>
                         <p className="text-sm text-gray-600">{doctor.specialization}</p>

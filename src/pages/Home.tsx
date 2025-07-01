@@ -151,7 +151,7 @@ const Home: React.FC = () => {
             <div className="text-left animate-slide-right">
               <div className="inline-flex items-center bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full shadow-soft mb-6">
                 <Heart className="h-5 w-5 text-primary-500 mr-2" />
-                <span className="text-sm font-medium text-gray-700">Trusted by 100,000+ patients</span>
+                <span className="text-sm font-medium text-gray-700">Trusted by 10+ patients</span>
               </div>
               
               <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-gray-900 mb-6 leading-tight">
@@ -415,7 +415,7 @@ const Home: React.FC = () => {
                   </div>
                   <div>
                     <div className="font-semibold text-gray-900">24/7 Support</div>
-                    <div className="text-gray-600">+91 22 1234 5678</div>
+                    <div className="text-gray-600">+91 89194 03905</div>
                   </div>
                 </div>
                 
@@ -425,7 +425,7 @@ const Home: React.FC = () => {
                   </div>
                   <div>
                     <div className="font-semibold text-gray-900">Email Support</div>
-                    <div className="text-gray-600">support@healthportal.com</div>
+                    <div className="text-gray-600">forefightera@gmail.com</div>
                   </div>
                 </div>
                 
@@ -435,7 +435,7 @@ const Home: React.FC = () => {
                   </div>
                   <div>
                     <div className="font-semibold text-gray-900">Visit Us</div>
-                    <div className="text-gray-600">123 Healthcare Plaza, Medical District</div>
+                    <div className="text-gray-600">Madnapalle</div>
                   </div>
                 </div>
               </div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Heart, Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin, Youtube } from 'lucide-react';
+import logo from '../images/logo.png';
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
@@ -46,12 +47,8 @@ const Footer: React.FC = () => {
           {/* Brand Section */}
           <div className="lg:col-span-2">
             <Link to="/" className="flex items-center space-x-3 group mb-6">
-              <div className="bg-gradient-to-r from-primary-500 to-secondary-500 p-2.5 rounded-xl shadow-soft group-hover:shadow-glow-primary transition-all duration-300">
-                <Heart className="h-6 w-6 text-white" />
-              </div>
-              <span className="text-xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
-                HealthPortal
-              </span>
+              <img src={logo} alt="logo" className="h-12 w-auto" />
+              <span className="text-xl font-bold text-gray-900">HealthPortal</span>
             </Link>
             <p className="text-gray-600 text-sm leading-relaxed mb-6">
               Your trusted partner in healthcare. We provide comprehensive medical services 
@@ -62,15 +59,15 @@ const Footer: React.FC = () => {
             <div className="space-y-3">
               <div className="flex items-center space-x-3 text-gray-600 text-sm">
                 <Phone className="h-4 w-4 text-primary-500" />
-                <span>+91 22 1234 5678</span>
+                <span>+91 89194 03905</span>
               </div>
               <div className="flex items-center space-x-3 text-gray-600 text-sm">
                 <Mail className="h-4 w-4 text-primary-500" />
-                <span>support@healthportal.com</span>
+                <span>forefightera@gmail.com</span>
               </div>
               <div className="flex items-start space-x-3 text-gray-600 text-sm">
                 <MapPin className="h-4 w-4 text-primary-500 mt-0.5" />
-                <span>123 Medical Center Dr, Healthcare City, HC 12345</span>
+                <span>madanapalle, andhra pradesh, india</span>
               </div>
             </div>
           </div>
@@ -145,43 +142,7 @@ const Footer: React.FC = () => {
         </div>
 
         {/* Social Media & Newsletter */}
-        <div className="mt-12 pt-8 border-t border-gray-100">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            {/* Social Media */}
-            <div className="flex items-center space-x-4">
-              <span className="text-sm font-medium text-gray-700">Follow us:</span>
-              <div className="flex space-x-3">
-                {socialLinks.map((social) => (
-                  <a
-                    key={social.name}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-10 h-10 bg-gradient-to-r from-primary-500 to-secondary-500 text-white rounded-xl flex items-center justify-center hover:shadow-glow-primary transition-all duration-300 transform hover:scale-110"
-                    aria-label={social.name}
-                  >
-                    <social.icon className="h-5 w-5" />
-                  </a>
-                ))}
-              </div>
-            </div>
-
-            {/* Newsletter Signup */}
-            <div className="flex items-center space-x-3">
-              <span className="text-sm font-medium text-gray-700">Stay updated:</span>
-              <div className="flex">
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="px-4 py-2 border border-gray-200 rounded-l-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                />
-                <button className="px-4 py-2 bg-gradient-to-r from-primary-500 to-secondary-500 text-white text-sm font-medium rounded-r-xl hover:shadow-glow-primary transition-all duration-300 transform hover:scale-105">
-                  Subscribe
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        
       </div>
 
       {/* Bottom Bar */}

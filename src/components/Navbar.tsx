@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Heart, User, LogOut, Bell } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
+import logo from '../images/logo.png'
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,12 +31,7 @@ const Navbar: React.FC = () => {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link to="/" className="flex items-center space-x-3 group">
-              <div className="bg-gradient-to-r from-primary-500 to-secondary-500 p-2.5 rounded-xl shadow-soft group-hover:shadow-glow-primary transition-all duration-300">
-                <Heart className="h-6 w-6 text-white" />
-              </div>
-              <span className="text-xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
-                HealthPortal
-              </span>
+              <img src={logo} alt="logo" className="h-12 w-auto" />
             </Link>
           </div>
 
@@ -75,8 +71,8 @@ const Navbar: React.FC = () => {
                       />
                     ) : (
                       <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
-                        <User className="h-4 w-4" />
-                      </div>
+                      <User className="h-4 w-4" />
+                    </div>
                     )}
                     <span className="text-sm font-medium">
                       {patientProfile?.fullName?.split(' ')[0] || 'User'}

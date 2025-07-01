@@ -279,8 +279,8 @@ const EmergencyContact: React.FC = () => {
             <div className="grid md:grid-cols-2 gap-6 text-left">
               <div>
                 <h3 className="font-semibold text-gray-900 mb-2">Contact Support</h3>
-                <p className="text-gray-600 text-sm mb-2">Email: support@healthportal.com</p>
-                <p className="text-gray-600 text-sm">Phone: +91 22 9876 5432</p>
+                <p className="text-gray-600 text-sm mb-2">Email: forefightera@gmail.com</p>
+                <p className="text-gray-600 text-sm">Phone: +91 89194 03905</p>
               </div>
               <div>
                 <h3 className="font-semibold text-gray-900 mb-2">Business Hours</h3>

@@ -36,8 +36,8 @@ const AboutUs: React.FC = () => {
   ];
 
   const stats = [
-    { number: '10,000+', label: 'Happy Patients', icon: Users },
-    { number: '500+', label: 'Expert Doctors', icon: Shield },
+    { number: '10+', label: 'Happy Patients', icon: Users },
+    { number: '4+', label: 'Expert Doctors', icon: Shield },
     { number: '24/7', label: 'Support Available', icon: Clock },
     { number: '99%', label: 'Satisfaction Rate', icon: Award },
   ];
@@ -243,13 +243,13 @@ const AboutUs: React.FC = () => {
             <div className="text-center">
               <div className="bg-white p-6 rounded-2xl shadow-soft mb-4">
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">2022</h3>
-                <p className="text-gray-600">Expanded to serve 50+ cities with 1000+ healthcare providers</p>
+                <p className="text-gray-600">Expanded to serve 2+ cities with 10+ healthcare providers</p>
               </div>
             </div>
             <div className="text-center">
               <div className="bg-white p-6 rounded-2xl shadow-soft mb-4">
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">2024</h3>
-                <p className="text-gray-600">Leading digital healthcare platform serving millions of patients</p>
+                <p className="text-gray-600">Leading digital healthcare platform serving 100+ of patients</p>
               </div>
             </div>
           </div>

@@ -142,13 +142,13 @@ const PrivacyPolicy: React.FC = () => {
               </p>
               <div className="bg-gray-50 rounded-xl p-6">
                 <p className="text-gray-600 mb-2">
-                  <strong>Email:</strong> privacy@healthportal.com
+                  <strong>Email:</strong> forefightera@gmail.com
                 </p>
                 <p className="text-gray-600 mb-2">
-                  <strong>Phone:</strong> +91 22 1234 5678
+                  <strong>Phone:</strong> +91 89194 03905
                 </p>
                 <p className="text-gray-600">
-                  <strong>Address:</strong> 123 Medical Center Dr, Healthcare City, HC 12345
+                  <strong>Address:</strong> Madanapalle, Andhra Pradesh, India
                 </p>
               </div>
             </div>
@@ -156,49 +156,7 @@ const PrivacyPolicy: React.FC = () => {
         </div>
       </div>
 
-      {/* Compliance Section */}
-      <div className="py-16 bg-gray-50">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Compliance & Certifications</h2>
-            <p className="text-lg text-gray-600">
-              We maintain the highest standards of data protection and privacy compliance.
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-white p-6 rounded-xl shadow-soft text-center">
-              <div className="bg-primary-100 p-3 rounded-xl w-fit mx-auto mb-4">
-                <Shield className="h-8 w-8 text-primary-600" />
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">HIPAA Compliant</h3>
-              <p className="text-gray-600 text-sm">
-                Full compliance with Health Insurance Portability and Accountability Act
-              </p>
-            </div>
-            
-            <div className="bg-white p-6 rounded-xl shadow-soft text-center">
-              <div className="bg-success-100 p-3 rounded-xl w-fit mx-auto mb-4">
-                <Lock className="h-8 w-8 text-success-600" />
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">SOC 2 Certified</h3>
-              <p className="text-gray-600 text-sm">
-                Service Organization Control 2 Type II certification for security
-              </p>
-            </div>
-            
-            <div className="bg-white p-6 rounded-xl shadow-soft text-center">
-              <div className="bg-accent-100 p-3 rounded-xl w-fit mx-auto mb-4">
-                <Eye className="h-8 w-8 text-accent-600" />
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">GDPR Ready</h3>
-              <p className="text-gray-600 text-sm">
-                General Data Protection Regulation compliance for EU users
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+     
     </div>
   );
 };
