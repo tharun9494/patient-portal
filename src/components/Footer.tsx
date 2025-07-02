@@ -48,7 +48,7 @@ const Footer: React.FC = () => {
           <div className="lg:col-span-2">
             <Link to="/" className="flex items-center space-x-3 group mb-6">
               <img src={logo} alt="logo" className="h-12 w-auto" />
-              <span className="text-xl font-bold text-gray-900">HealthPortal</span>
+              <span className="text-xl font-bold text-gray-900">Fore Fight Era Private Limited</span>
             </Link>
             <p className="text-gray-600 text-sm leading-relaxed mb-6">
               Your trusted partner in healthcare. We provide comprehensive medical services 
@@ -150,7 +150,7 @@ const Footer: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="text-sm text-gray-600">
-              © {currentYear} HealthPortal. All rights reserved.
+              © {currentYear} Fore Fight Era Private Limited. All rights reserved.
             </div>
             <div className="flex items-center space-x-6 text-sm text-gray-600">
               <Link to="/privacy" className="hover:text-primary-600 transition-colors">
