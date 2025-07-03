@@ -344,6 +344,34 @@ const Appointments: React.FC = () => {
       }
     }
 
+    // Get the selected doctor details
+    const selectedDoctorObj = doctors.find(d => d.id === data.doctorId);
+    if (!selectedDoctorObj) {
+      toast.error('Doctor not found. Please try again.');
+      return;
+    }
+
+    // Validate doctor data
+    if (!selectedDoctorObj.name || !selectedDoctorObj.consultationFee) {
+      toast.error('Doctor data is incomplete. Please try again.');
+      return;
+    }
+
+    // Payment step: open Razorpay and only proceed if payment is successful
+    try {
+      setLoading(true);
+      await handleRazorpayPayment(
+        selectedDoctorObj.consultationFee,
+        patientData.fullName || currentUser.displayName || currentUser.email || 'Unknown',
+        patientData.email || currentUser.email || '',
+        patientData.phoneNumber || ''
+      );
+    } catch (paymentError) {
+      setLoading(false);
+      toast.error('Payment was not completed. Please try again.');
+      return;
+    }
+
     setLoading(true);
     try {
       // Fetch patient profile to get the real patient ID
@@ -416,22 +444,6 @@ const Appointments: React.FC = () => {
       
       if (currentBookedPatients >= maxPatients) {
         toast.error('This time slot is no longer available. Please choose another slot.');
-        return;
-      }
-
-      // Get the selected doctor details
-      const selectedDoctorObj = doctors.find(d => d.id === data.doctorId);
-      if (!selectedDoctorObj) {
-        toast.error('Doctor not found. Please try again.');
-        return;
-      }
-
-      console.log('Selected doctor object:', selectedDoctorObj);
-      console.log('Doctor consultation fee:', selectedDoctorObj.consultationFee);
-
-      // Validate doctor data
-      if (!selectedDoctorObj.name || !selectedDoctorObj.consultationFee) {
-        toast.error('Doctor data is incomplete. Please try again.');
         return;
       }
 
@@ -1041,6 +1053,84 @@ const Appointments: React.FC = () => {
       default:
         return null;
     }
+  };
+
+  // Create order via backend
+  const createOrder = async (amount: number) => {
+    const response = await fetch('http://localhost:3000/api/payment/create-order', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ amount })
+    });
+    return response.json();
+  };
+
+  // Verify payment via backend
+  const verifyPayment = async (paymentData: any) => {
+    const response = await fetch('http://localhost:3000/api/payment/verify-payment', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(paymentData)
+    });
+    return response.json();
+  };
+
+  // Razorpay payment handler
+  const handleRazorpayPayment = async (amount: number, patientName: string, patientEmail: string, patientPhone: string): Promise<any> => {
+    // 1. Create order on backend
+    const orderData = await createOrder(amount);
+
+    // 2. Load Razorpay SDK if not already loaded
+    if (!(window as any).Razorpay) {
+      await new Promise((resolve) => {
+        const script = document.createElement('script');
+        script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+        script.onload = resolve;
+        document.body.appendChild(script);
+      });
+    }
+
+    // 3. Open Razorpay modal
+    return new Promise((resolve, reject) => {
+      const options = {
+        key: orderData.key_id, // or use your frontend env key
+        amount: orderData.order.amount,
+        currency: orderData.order.currency,
+        name: 'HealthPortal',
+        description: 'Appointment Booking',
+        order_id: orderData.order.id,
+        handler: async (response: any) => {
+          // 4. Verify payment on backend
+          const verifyData = await verifyPayment({
+            razorpay_order_id: response.razorpay_order_id,
+            razorpay_payment_id: response.razorpay_payment_id,
+            razorpay_signature: response.razorpay_signature
+          });
+          if (verifyData.success) {
+            toast.success('Payment successful!');
+            resolve(response);
+          } else {
+            toast.error('Payment verification failed!');
+            reject('Payment verification failed');
+          }
+        },
+        prefill: {
+          name: patientName,
+          email: patientEmail,
+          contact: patientPhone,
+        },
+        theme: {
+          color: '#10B981',
+        },
+        modal: {
+          ondismiss: function () {
+            reject('Payment cancelled');
+          }
+        }
+      };
+      const rzp = new (window as any).Razorpay(options);
+      rzp.open();
+    });
   };
 
   return (
