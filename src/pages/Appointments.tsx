@@ -1057,7 +1057,7 @@ const Appointments: React.FC = () => {
 
   // Create order via backend
   const createOrder = async (amount: number) => {
-    const response = await fetch('http://localhost:3000/api/payment/create-order', {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/payment/create-order`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ amount })
@@ -1067,7 +1067,7 @@ const Appointments: React.FC = () => {
 
   // Verify payment via backend
   const verifyPayment = async (paymentData: any) => {
-    const response = await fetch('http://localhost:3000/api/payment/verify-payment', {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/payment/verify-payment`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(paymentData)
