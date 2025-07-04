@@ -151,6 +151,7 @@ const Home: React.FC = () => {
             <div className="text-left animate-slide-right">
               <div className="inline-flex items-center bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full shadow-soft mb-6">
                 <Heart className="h-5 w-5 text-primary-500 mr-2" />
+                
                 <span className="text-sm font-medium text-gray-700">Trusted by 10+ patients</span>
               </div>
               

@@ -53,7 +53,9 @@ const OnlineConsultation: React.FC = () => {
             } as Appointment & { doctorName: string });
           } catch (doctorError) {
             console.error('Error fetching doctor details:', doctorError);
+            
             // Add appointment without doctor name if doctor fetch fails
+            console.log("🚨 Firebase API Key:", import.meta.env.VITE_FIREBASE_API_KEY);
             appointmentList.push({
               id: doc.id,
               ...appointmentData,
